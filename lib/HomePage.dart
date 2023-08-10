@@ -5,6 +5,7 @@ import 'package:error_screen/Error_Screen/Screen%204.dart';
 import 'package:error_screen/Error_Screen/Screen%205.dart';
 import 'package:error_screen/Error_Screen/Screen%206.dart';
 import 'package:error_screen/Error_Screen/Screen%207.dart';
+import 'package:error_screen/ImagePicer%20and%20Show.dart';
 import 'package:error_screen/M-namaj%20time.dart';
 import 'package:flutter/material.dart';
 
@@ -55,6 +56,10 @@ class ErrorHomePage extends StatelessWidget {
               Navigator.push(context, MaterialPageRoute(builder: (context) => AzanAppUIDesign()));
             },
                 child: Text("Masud ui")),
+            TextButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ShowFullImageOnTap()));
+            },
+                child: Text("Show Full Image")),
           ],
         ),
       ),
