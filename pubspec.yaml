@@ -28,6 +28,8 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  multiple_images_picker: ^1.0.1
+  image_picker: ^1.0.2
   file_picker: ^5.2.11
   flutter:
     sdk: flutter

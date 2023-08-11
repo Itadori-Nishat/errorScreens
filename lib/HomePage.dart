@@ -5,9 +5,11 @@ import 'package:error_screen/Error_Screen/Screen%204.dart';
 import 'package:error_screen/Error_Screen/Screen%205.dart';
 import 'package:error_screen/Error_Screen/Screen%206.dart';
 import 'package:error_screen/Error_Screen/Screen%207.dart';
-import 'package:error_screen/ImagePicer%20and%20Show.dart';
 import 'package:error_screen/M-namaj%20time.dart';
+import 'package:error_screen/MultipleImagePicker.dart';
 import 'package:flutter/material.dart';
+
+import 'ImagePicker and Show.dart';
 
 class ErrorHomePage extends StatelessWidget {
   const ErrorHomePage({Key? key}) : super(key: key);
@@ -49,17 +51,17 @@ class ErrorHomePage extends StatelessWidget {
             },
                 child: Text("Screen Six")),
             TextButton(onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ScreenSeven()));
-            },
-                child: Text("Screen Seven")),
-            TextButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => AzanAppUIDesign()));
             },
                 child: Text("Masud ui")),
             TextButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => ShowFullImageOnTap()));
             },
-                child: Text("Show Full Image")),
+                child: Text("Single image Full view")),
+            TextButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => MultipleImagePicker()));
+            },
+                child: Text("Multiple Image picker")),
           ],
         ),
       ),

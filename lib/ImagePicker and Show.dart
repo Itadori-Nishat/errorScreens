@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
@@ -32,10 +31,9 @@ class _ShowFullImageOnTapState extends State<ShowFullImageOnTap> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (selectedPhoto != null)
-
             GestureDetector(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ViewImage(image: selectedPhoto)));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ViewSingleImage(image: selectedPhoto)));
               },
               child: Container(
                 height: height*0.3,
@@ -67,39 +65,21 @@ class _ShowFullImageOnTapState extends State<ShowFullImageOnTap> {
   }
 }
 
-class ViewImage extends StatelessWidget {
-  File? image;
-  ViewImage({Key? key, this.image}) : super(key: key);
-  PageController _pageController = PageController();
+class ViewSingleImage extends StatelessWidget {
+  final File? image;
+  const ViewSingleImage({Key? key, required this.image}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
     return SizedBox(
       height: double.infinity,
       width: double.infinity,
-      child: Image.file(image!,
-        fit: BoxFit.contain,
+      child: InteractiveViewer(
+        maxScale: 25,
+        child: Image.file(image!,
+          fit: BoxFit.contain,
+        ),
       ),
     );
   }
 }
-
-
-//
-// GestureDetector(
-// onHorizontalDragEnd: (details) {
-// if (details.primaryVelocity! < 0) {
-// // Swiped from left to right (next page)
-// _pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
-// } else if (details.primaryVelocity! > 0) {
-// // Swiped from right to left (previous page)
-// _pageController.previousPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
-// }
-// },
-// child: PageView(
-// controller: _pageController,
-// children: [Image.file(image!)],
-// ),
-// )
