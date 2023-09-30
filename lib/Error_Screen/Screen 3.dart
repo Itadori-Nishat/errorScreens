@@ -1,8 +1,7 @@
 import 'dart:io';
-
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UsersScreen extends StatefulWidget {
   @override
@@ -10,101 +9,44 @@ class UsersScreen extends StatefulWidget {
 }
 
 class _UsersScreenState extends State<UsersScreen> {
-  File? selectedPhoto;
+  List<XFile>? _imageFiles = [];
+
+  Future _pickImages() async {
+    List<XFile>? selectedImages = await ImagePicker().pickMultiImage();
+    if (selectedImages != null && selectedImages.isNotEmpty) {
+      setState(() {
+        _imageFiles = selectedImages;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    void _uploadPhoto() async {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-          type: FileType.custom, allowedExtensions: ['jpg', 'jpeg', 'png']);
-      debugPrint("filepicker result: $result");
-      if (result != null) {
-        debugPrint("result not null");
-        File file = File(result.files.single.path!);
-        setState(() {
-          selectedPhoto = file;
-        });
-      }
-    }
-
-    // _avatar(String? profileImage) {
-    //   /// if custom photo selected
-    //   if (selectedPhoto != null) {
-    //     return CircleAvatar(
-    //         radius: 60,
-    //         child: ClipOval(
-    //               child: Image.file(
-    //                 selectedPhoto!,
-    //                 fit: BoxFit.cover,
-    //               ),
-    //         ));
-    //   } return CircleAvatar(
-    //     radius: 50,
-    //     child: profileImage != null
-    //         ? ClipOval(
-    //       child: CachedNetworkImage(
-    //         imageUrl: profileImage,
-    //         fit: BoxFit.cover,
-    //         width: 95,
-    //         height: 95,
-    //       ),
-    //     )
-    //         : Icon(
-    //       Icons.person_rounded,
-    //       size: 100,
-    //       color: Colors.white,
-    //     ),
-    //   );
-    // }
-
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(
-        title: Text('User Details'),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _pickImages();
+        },
+        child: Icon(Icons.add),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            if (selectedPhoto != null)
-              SizedBox(
-                height: MediaQuery.of(context).size.height*.8,
-                width: double.infinity,
-                child: Image.file(
-                  selectedPhoto!,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            Text("Image Path: ${selectedPhoto?.path}"),
-            Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: Column(
-
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Align(
-                    alignment: Alignment.center,
-                    child: ElevatedButton(
-                        onPressed: _uploadPhoto,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(Icons.insert_photo_outlined),
-                            SizedBox(
-                              width: 5.0,
-                            ),
-                            Text(
-                              selectedPhoto == null
-                                  ? 'Select Photo'
-                                  : 'Update Photo',
-                              style: TextStyle(fontSize: 17.0),
-                            )
-                          ],
-                        )),
-                  ),
-                ],
-              ),
+      body: Column(
+        children: [
+          GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 1.0,
             ),
-          ],
-        ),
+            shrinkWrap: true,
+            itemCount: 3,
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                margin: EdgeInsets.all(8.0),
+                child: Image.file(File(_imageFiles![index].path),fit: BoxFit.cover,),
+              );
+            },
+          )
+        ],
       ),
     );
   }

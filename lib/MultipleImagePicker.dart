@@ -12,15 +12,13 @@ class MultipleImagePicker extends StatefulWidget {
 class _MultipleImagePickerState extends State<MultipleImagePicker> {
    List<XFile>? _imageFiles = [];
 
-   Future<void> _pickImages() async {
+   Future _pickImages() async {
      List<XFile>? selectedImages = await ImagePicker().pickMultiImage();
-
      if (selectedImages != null && selectedImages.isNotEmpty) {
        setState(() {
          _imageFiles = selectedImages;
        });
-     }
-   }
+     }}
 
 
 
